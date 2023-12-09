@@ -12,6 +12,7 @@
         <module name="Exercice" />
         <module name="coach" />
         <module name="discovery-service" />
+
         <module name="ProduitService" />
       </profile>
     </annotationProcessing>
@@ -27,6 +28,7 @@
       <module name="SalleService" options="-parameters" />
       <module name="coach" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
+
       <module name="produit" options="-parameters" />
     </option>
   </component>
