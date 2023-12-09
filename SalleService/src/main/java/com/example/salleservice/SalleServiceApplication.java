@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import java.util.List;
 
 @SpringBootApplication
-@EnableDiscoveryClient
 public class SalleServiceApplication {
 
 	public static void main(String[] args) {
