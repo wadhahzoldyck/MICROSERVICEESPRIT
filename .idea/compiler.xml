@@ -2,19 +2,22 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SalleService" />
+        <module name="ProduitService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="produit" target="17" />
+      <module name="SalleService" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ProduitService" options="-parameters" />
       <module name="SalleService" options="-parameters" />
       <module name="produit" options="-parameters" />
     </option>
