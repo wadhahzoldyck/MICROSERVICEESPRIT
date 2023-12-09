@@ -1,10 +1,13 @@
 package com.example.salleservice.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.salleservice.model.Coach;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ext.SqlBlobSerializer;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.sql.Blob;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,5 +24,13 @@ public class Salle {
     private String Location ;
 
     private int capacity ;
+
+    @Lob
+    @JsonSerialize(using = SqlBlobSerializer.class)
+    Blob image;
+    @Transient
+     private Coach coach ;
+    @ElementCollection
+    private List<Integer> idCoach ;
 
 }
