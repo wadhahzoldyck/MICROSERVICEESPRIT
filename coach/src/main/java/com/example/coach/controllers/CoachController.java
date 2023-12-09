@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/api/coaches")
 public class CoachController {
     private final ICoachService coachService;
 
@@ -14,22 +16,25 @@ public class CoachController {
     }
 
     @PostMapping
-    public Coach addCoach(@RequestBody Coach coach) {
+    public ResponseEntity<Coach> addCoach(@RequestBody Coach coach) {
         Coach addedCoach = coachService.addCoach(coach);
-        return addedCoach;
+        return new ResponseEntity<>(addedCoach, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public Coach updateCoach(@RequestBody Coach coach) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Coach> updateCoach(@PathVariable long id,@RequestBody Coach coach) {
         Coach updatedCoach = coachService.updateCoach(coach);
-        return updatedCoach;
+        return new ResponseEntity<>(updatedCoach, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Coach retrieveCoach(@PathVariable long id) {
+    public ResponseEntity<Coach> retrieveCoach(@PathVariable long id) {
         Coach coach = coachService.retrieveCoach(id);
-        return coach;
-
+        if (coach != null) {
+            return new ResponseEntity<>(coach, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
