@@ -5,6 +5,7 @@ import com.example.coach.repository.CoachRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 @Service
@@ -17,7 +18,8 @@ public class ICoachServiceImp implements ICoachService{
         return coachRepository.save(coach);
     }
     @Override
-    public Coach updateCoach(Coach coach) {
+    public Coach updateCoach(Coach coach)
+    {
         return coachRepository.save(coach);
     }
     @Override
