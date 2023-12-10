@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/coaches")
+@RequestMapping("/coach")
 public class CoachController {
     private final ICoachService coachService;
 

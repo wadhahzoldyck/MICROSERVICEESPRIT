@@ -10,13 +10,14 @@
         <module name="MicroServicePlantExercice" />
         <module name="SalleService" />
         <module name="Exercice" />
+        <module name="ProduitService" />
+        <module name="api-gateway" />
         <module name="coach" />
         <module name="discovery-service" />
-
-        <module name="ProduitService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="gateway-service" target="17" />
       <module name="produit" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -26,9 +27,10 @@
       <module name="MicroServicePlantExercice" options="-parameters" />
       <module name="ProduitService" options="-parameters" />
       <module name="SalleService" options="-parameters" />
+      <module name="api-gateway" options="-parameters" />
       <module name="coach" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
-
+      <module name="gateway-service" options="-parameters" />
       <module name="produit" options="-parameters" />
     </option>
   </component>

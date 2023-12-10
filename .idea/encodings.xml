@@ -6,9 +6,10 @@
     <file url="file://$PROJECT_DIR$/ProduitService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SalleService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SalleService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/coach/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/discovery-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/produit/src/main/java" charset="UTF-8" />
-
   </component>
 </project>
