@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("Product")
+@RequestMapping("/Product")
 @RequiredArgsConstructor
 public class ProductController {
 
