@@ -31,4 +31,9 @@ public class ICoachServiceImp implements ICoachService{
         coachRepository.deleteById(idCoach);
     }
 
+    @Override
+    public List<Coach> retrieveAllCoaches() {
+        return coachRepository.findAll();
+    }
+
 }

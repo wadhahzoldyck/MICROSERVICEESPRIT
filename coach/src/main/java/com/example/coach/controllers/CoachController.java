@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/coach")
 public class CoachController {
@@ -35,6 +37,11 @@ public class CoachController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    @GetMapping("/{all}")
+    public ResponseEntity<List<Coach>> retrieveAllCoaches() {
+        List<Coach> coaches = coachService.retrieveAllCoaches();
+        return new ResponseEntity<>(coaches, HttpStatus.OK);
     }
 
 
