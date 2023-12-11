@@ -1,9 +1,12 @@
 package com.example.salleservice.controllers;
 
 import com.example.salleservice.Entities.Salle;
+import com.example.salleservice.clients.CoachRestClient;
+import com.example.salleservice.model.Coach;
 import com.example.salleservice.services.ISalleServiceImp;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,6 +27,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SalleRestController {
     private final ISalleServiceImp iSalleServiceImp;
+
+    private final CoachRestClient coachRestClient ;
 
     @PostMapping(value = "/addSalle", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Salle> addSalle(
@@ -54,7 +60,13 @@ public class SalleRestController {
 
     @GetMapping("/{idSalle}")
     public ResponseEntity<Salle> retrieveSalle(@PathVariable long idSalle) {
+        List<Coach> coaches = new ArrayList<>();
         Salle retrievedSalle = iSalleServiceImp.retrieveSalleById(idSalle);
+        for(Long i : retrievedSalle.getIdCoach()){
+          coaches.add(coachRestClient.findCoachById(i));
+
+        }
+        retrievedSalle.setCoaches(coaches);
         return new ResponseEntity<>(retrievedSalle, HttpStatus.OK);
     }
 

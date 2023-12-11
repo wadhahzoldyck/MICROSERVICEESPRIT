@@ -9,6 +9,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Coach {
-    private  long idCoach ;
-    private String name ;
+
+    long idCoach ;
+    String nomCoach;
+    String prenomCoach;
+    String experiance;
+    boolean availability;
 }
