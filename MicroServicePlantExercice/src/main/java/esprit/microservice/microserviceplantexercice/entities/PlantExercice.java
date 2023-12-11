@@ -1,11 +1,8 @@
 package esprit.microservice.microserviceplantexercice.entities;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import esprit.microservice.microserviceplantexercice.models.Exercice;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,6 +11,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PlantExercice implements Serializable {
     private static final long serialVersionUID = 6;
     @Id
@@ -23,7 +23,9 @@ public class PlantExercice implements Serializable {
     private LocalDate startPlant;
     private LocalDate endPlant;
     @ElementCollection
-    private List<String> listExercices;
+    private List<Long> listExercices;
+    @Transient
+    private List<Exercice>exercices;
 
 
 }
