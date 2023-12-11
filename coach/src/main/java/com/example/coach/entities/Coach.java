@@ -1,13 +1,12 @@
 package com.example.coach.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.coach.model.Salle;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,4 +20,7 @@ public class Coach {
     String prenomCoach;
     String experiance;
     boolean availability;
+    @Transient
+    Salle salle;
+    long salleId;
 }
