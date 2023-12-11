@@ -14,6 +14,7 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableFeignClients
+
 public class SalleServiceApplication {
 
 	public static void main(String[] args) {
