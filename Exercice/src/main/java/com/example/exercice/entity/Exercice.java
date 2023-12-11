@@ -1,9 +1,12 @@
 package com.example.exercice.entity;
 
 import com.example.exercice.entity.enumeration.CategoryEx;
+import com.example.exercice.model.PlantExercice;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,5 +23,10 @@ public class Exercice {
     String descriptionEx;
     @Enumerated(EnumType.STRING)
     CategoryEx categoryEx;
+
+    @Transient
+    private List<PlantExercice> listPlantExercice;
+    @ElementCollection
+    private List<Long> listPlantExercices;
 
 }
