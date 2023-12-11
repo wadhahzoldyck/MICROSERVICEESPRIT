@@ -13,13 +13,13 @@ import java.util.List;
 public interface CoachRestClient {
 
     @GetMapping("/coach/{idCoach}")
-    @CircuitBreaker(name = "coachs" , fallbackMethod = "getDefaultCoach")
+    @CircuitBreaker(name = "coachs", fallbackMethod = "getDefaultCoach")
     Coach findCoachById(@PathVariable long idCoach);
     @GetMapping("/coach/all")
     @CircuitBreaker(name = "coachs" , fallbackMethod = "getDefaultCoach1")
     List<Coach> allCoaches();
 
-    default Coach getDefaultCoach(Long idCoach, Exception exception){
+    default Coach getDefaultCoach(long idCoach, Throwable exception){
         Coach coach  = new Coach();
         coach.setIdCoach(idCoach);
         coach.setNomCoach("Not Available");
