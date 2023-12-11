@@ -78,7 +78,19 @@ public class SalleRestController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Salle>> retrieveSalles() {
+
         List<Salle> salles = iSalleServiceImp.retrieveSalles();
+
+        for(Salle i : salles){
+            List<Coach> coaches = new ArrayList<>();
+            for(Long c : i.getIdCoach()){
+                coaches.add(coachRestClient.findCoachById(c));
+
+            }
+            i.setCoaches(coaches);
+
+        }
+
         return new ResponseEntity<>(salles, HttpStatus.OK);
     }
 }
