@@ -38,7 +38,7 @@ public class CoachController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/{all}")
+    @GetMapping("/all")
     public ResponseEntity<List<Coach>> retrieveAllCoaches() {
         List<Coach> coaches = coachService.retrieveAllCoaches();
         return new ResponseEntity<>(coaches, HttpStatus.OK);

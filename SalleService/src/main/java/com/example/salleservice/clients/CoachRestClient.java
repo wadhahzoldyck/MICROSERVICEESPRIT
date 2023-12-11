@@ -12,7 +12,7 @@ public interface CoachRestClient {
 
     @GetMapping("/coach/{idCoach}")
     Coach findCoachById(@PathVariable long idCoach);
-    @GetMapping("/coach")
+    @GetMapping("/coach/all")
     List<Coach> allCoaches();
 
 }
