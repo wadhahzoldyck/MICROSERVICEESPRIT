@@ -29,8 +29,8 @@ public class Salle {
     @JsonSerialize(using = SqlBlobSerializer.class)
     Blob image;
     @Transient
-     private Coach coach ;
+    List<Coach>  coaches ;
     @ElementCollection
-    private List<Integer> idCoach ;
+    private List<Long> idCoach ;
 
 }
