@@ -1,10 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/SalleService/pom.xml" />
+        <option value="$PROJECT_DIR$/ProduitService/pom.xml" />
         <option value="$PROJECT_DIR$/produit/pom.xml" />
+        <option value="$PROJECT_DIR$/SalleService/pom.xml" />
+        <option value="$PROJECT_DIR$/MicroServicePlantExercice/pom.xml" />
+        <option value="$PROJECT_DIR$/Exercice/pom.xml" />
+        <option value="$PROJECT_DIR$/coach/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery-service/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway-service/pom.xml" />
+        <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
       </list>
     </option>
   </component>
