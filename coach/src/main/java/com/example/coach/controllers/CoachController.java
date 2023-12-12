@@ -1,7 +1,11 @@
 package com.example.coach.controllers;
 
+import com.example.coach.clients.SalleRestClient;
 import com.example.coach.entities.Coach;
+import com.example.coach.model.Salle;
+import com.example.coach.repository.CoachRepository;
 import com.example.coach.services.ICoachService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/coach")
 public class CoachController {
     private final ICoachService coachService;
+    @Autowired
+    private  SalleRestClient salleRestClient;
 
-    public CoachController(ICoachService coachService) {
+    public CoachController(ICoachService coachService,
+                           CoachRepository coachRepository) {
         this.coachService = coachService;
     }
 
@@ -30,15 +38,14 @@ public class CoachController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Coach> retrieveCoach(@PathVariable long id) {
-        Coach coach = coachService.retrieveCoach(id);
-        if (coach != null) {
-            return new ResponseEntity<>(coach, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public Coach retrieveCoach(@PathVariable long id) {
+
+        Coach coach= coachService.retrieveCoach(id);
+        Salle salle= salleRestClient.findSalleById(coach.getIdSalle());
+        coach.setSalle(salle);
+        return coach;
     }
-    @GetMapping("/{all}")
+    @GetMapping("/all")
     public ResponseEntity<List<Coach>> retrieveAllCoaches() {
         List<Coach> coaches = coachService.retrieveAllCoaches();
         return new ResponseEntity<>(coaches, HttpStatus.OK);
