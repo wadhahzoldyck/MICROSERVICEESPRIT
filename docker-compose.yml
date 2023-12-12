@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   mysqldbplant:
     container_name: plant-mysql-container
@@ -47,22 +49,6 @@ services:
       - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
     healthcheck:
       test: ["CMD", "curl", "-f", "http://salle-service:8084/actuator/health"]
-      interval: 10s
-    depends_on:
-      discoveryservice:
-        condition: service_healthy
-
-  coach-service:
-    build: ./coach
-    container_name: coach-service
-    ports:
-      - '8082:8082'
-    expose:
-      - '8082'
-    environment:
-      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://coach-service:8082/actuator/health"]
       interval: 10s
     depends_on:
       discoveryservice:
@@ -136,6 +122,22 @@ services:
       - mysqlprod
     volumes:
       - /tmp
+
+  coach-service:
+    build: ./coach
+    container_name: coach-service
+    ports:
+      - '8082:8082'
+    expose:
+      - '8082'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://coach-service:8082/actuator/health"]
+      interval: 10s
+    depends_on:
+      discoveryservice:
+        condition: service_healthy
 
 volumes:
   db:
