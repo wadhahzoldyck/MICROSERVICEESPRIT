@@ -1,0 +1,26 @@
+services:
+  mysqldb:
+    container_name: plant-mysql-container
+    ports:
+      - "3306:3306"
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 'PlantExercice'
+    volumes:
+      - /tmp
+
+  esprit-plant-service:
+    build: ./MicroServicePlantExercice
+    container_name: plant-service
+    ports:
+      - '8083:8083'
+    expose:
+      - '8083'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/PlantExercice?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - mysqldb
