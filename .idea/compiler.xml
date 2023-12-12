@@ -7,13 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="MicroServicePlantExercice" />
-        <module name="SalleService" />
-        <module name="Exercice" />
-        <module name="ProduitService" />
-        <module name="api-gateway" />
         <module name="coach" />
-        <module name="discovery-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
