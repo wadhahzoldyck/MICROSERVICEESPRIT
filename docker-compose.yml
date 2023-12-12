@@ -1,5 +1,4 @@
 services:
-
   mysqldbplant:
     container_name: plant-mysql-container
     ports:
@@ -34,7 +33,7 @@ services:
     expose:
       - '8761'
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://discovery-service:8761/actuator/health" ]
+      test: ["CMD", "curl", "-f", "http://discovery-service:8761/actuator/health"]
       interval: 10s
 
   esprit-salle-service:
@@ -47,12 +46,11 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://salle-service:8084/actuator/health" ]
+      test: ["CMD", "curl", "-f", "http://salle-service:8084/actuator/health"]
       interval: 10s
     depends_on:
       discoveryservice:
         condition: service_healthy
-
 
   coach-service:
     build: ./coach
@@ -64,7 +62,7 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://coach-service:8082/actuator/health" ]
+      test: ["CMD", "curl", "-f", "http://coach-service:8082/actuator/health"]
       interval: 10s
     depends_on:
       discoveryservice:
@@ -80,8 +78,34 @@ services:
     environment:
       - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://api-gateway:9191/actuator/health" ]
+      test: ["CMD", "curl", "-f", "http://api-gateway:9191/actuator/health"]
       interval: 10s
     depends_on:
       discoveryservice:
         condition: service_healthy
+
+  mysqldb:
+    container_name: exercice-mysql-container
+    ports:
+      - "3306:3306"
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 'exercice'
+    volumes:
+      - /tmp
+
+  esprit-exercice-service:
+    build: ./Exercice
+    container_name: exercice-service
+    ports:
+      - '8085:8085'
+    expose:
+      - '8085'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/exercice?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - mysqldb

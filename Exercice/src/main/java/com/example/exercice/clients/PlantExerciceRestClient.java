@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "plan-service")
+@FeignClient(name = "plant-service")
 public interface PlantExerciceRestClient {
     @GetMapping("PlantExercice/get/{id}")
-    @CircuitBreaker(name = "PlantService", fallbackMethod = "getDefaultPlantExercice")
+    @CircuitBreaker(name = "PlanSer", fallbackMethod = "getDefaultPlantExercice")
     PlantExercice getPlantById(@PathVariable long id);
     @GetMapping("PlantExercice/Getallplant")
     List<PlantExercice> GetallPlantExercie();
-    default PlantExercice getDefaultPlantExercice(Long id,Exception exception ){
+    default PlantExercice getDefaultPlantExercice(Long id,Throwable exception ){
         PlantExercice plantExercice=new PlantExercice();
         plantExercice.setIdPlant(id);
         plantExercice.setNomPlant("Not Vailable");
