@@ -1,6 +1,6 @@
 services:
 
-  mysqldb:
+  mysqldbplant:
     container_name: plant-mysql-container
     ports:
       - "3306:3306"
@@ -19,12 +19,12 @@ services:
     expose:
       - '8083'
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/PlantExercice?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldbplant:3306/PlantExercice?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
       - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
     depends_on:
-      - mysqldb
+      - mysqldbplant
 
   discoveryservice:
     build: ./discovery-service
