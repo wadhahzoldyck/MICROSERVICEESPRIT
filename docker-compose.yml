@@ -1,4 +1,5 @@
 services:
+
   mysqldb:
     container_name: plant-mysql-container
     ports:
@@ -24,3 +25,63 @@ services:
       - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
     depends_on:
       - mysqldb
+
+  discoveryservice:
+    build: ./discovery-service
+    container_name: discovery-service
+    ports:
+      - '8761:8761'
+    expose:
+      - '8761'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://discovery-service:8761/actuator/health" ]
+      interval: 10s
+
+  esprit-salle-service:
+    build: ./SalleService
+    container_name: salle-service
+    ports:
+      - '8084:8084'
+    expose:
+      - '8084'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://salle-service:8084/actuator/health" ]
+      interval: 10s
+    depends_on:
+      discoveryservice:
+        condition: service_healthy
+
+
+  coach-service:
+    build: ./coach
+    container_name: coach-service
+    ports:
+      - '8082:8082'
+    expose:
+      - '8082'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://coach-service:8082/actuator/health" ]
+      interval: 10s
+    depends_on:
+      discoveryservice:
+        condition: service_healthy
+
+  gateway-service:
+    build: ./api-gateway
+    container_name: gateway-service
+    ports:
+      - '9191:9191'
+    expose:
+      - '9191'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://api-gateway:9191/actuator/health" ]
+      interval: 10s
+    depends_on:
+      discoveryservice:
+        condition: service_healthy
