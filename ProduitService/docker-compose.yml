@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  mysqldb:
+  mysqlprod:
     container_name: mysql-container
     ports:
       - "3306:3306"
@@ -18,13 +18,14 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/productdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlprod:3306/productdb
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+
     ports:
-      - "8089:8089"
+      - "8081:8081"
     depends_on:
-      - mysqldb
+      - mysqlprod
     volumes:
       - ./backend_spring_data:/app/data
 
