@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  mysqldb:
+    container_name: exercice-mysql-container
+    ports:
+      - "3306:3306"
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 'exercice'
+    volumes:
+      - /tmp
+
+  esprit-exercice-service:
+    build: ./Exercice
+    container_name: exercice-service
+    ports:
+      - '8085:8085'
+    expose:
+      - '8085'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/exercice?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    depends_on:
+      - mysqldb
