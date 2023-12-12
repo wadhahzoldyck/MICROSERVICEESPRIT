@@ -22,5 +22,5 @@ public class Coach {
     boolean availability;
     @Transient
     Salle salle;
-    long salleId;
+    long idSalle;
 }

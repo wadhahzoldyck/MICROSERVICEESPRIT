@@ -1,11 +1,14 @@
 package com.example.exercice.controller;
 
+import com.example.exercice.clients.PlantExerciceRestClient;
 import com.example.exercice.entity.Exercice;
+import com.example.exercice.model.PlantExercice;
 import com.example.exercice.service.IExerciceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,9 +17,13 @@ import java.util.List;
 public class ExerciceController {
     @Autowired
     private  IExerciceService iExerciceService;
+    @Autowired
+    private PlantExerciceRestClient plantExerciceRestClient;
     @GetMapping
     public List<Exercice> getAllExercices(){
+
         return iExerciceService.getAllExercices();
+
     }
 
 
@@ -32,7 +39,16 @@ public class ExerciceController {
 
     @GetMapping("{idExercice}")
     public Exercice getExercice(@PathVariable long idExercice){
+        Exercice exercice= iExerciceService.getExercice(idExercice);
+        List<PlantExercice>plantExerciceList=new ArrayList<>();
+        for ( Long i: exercice.getListPlantExercices())
+        {
+            PlantExercice plantExercice=plantExerciceRestClient.getPlantById(i)   ;
+            plantExerciceList.add(plantExercice);
+        }
+        exercice.setListPlantExercice(plantExerciceList);
         return iExerciceService.getExercice(idExercice);
+
     }
 
 
