@@ -13,7 +13,7 @@ A team of esprit students developing microservices for a project " PLATEFORME DE
   
 ## Tech Stack
 
-**Client Side:** Angular 16, Eureka
+**Client Side:** Angular 15, Eureka
 
 **Server Side:** Spring, API Gateway, Eureka, MongoDB (reactive) ,Nodejs
  
