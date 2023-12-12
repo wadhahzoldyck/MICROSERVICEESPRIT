@@ -109,3 +109,34 @@ services:
       - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
     depends_on:
       - mysqldb
+
+  mysqlprod:
+    container_name: mysql-container
+    ports:
+      - "3306:3306"
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 'productdb'
+    volumes:
+      - db:/var/lib/mysql
+
+  backend_spring:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlprod:3306/productdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysqlprod
+    volumes:
+      - /tmp
+
+volumes:
+  db:
+  backend_spring_data:
