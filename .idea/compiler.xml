@@ -7,29 +7,29 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="MicroServicePlantExercice" />
+        <module name="SalleService" />
+        <module name="Exercice" />
+        <module name="ProduitService" />
+        <module name="api-gateway" />
+        <module name="coach" />
+        <module name="discovery-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="api-gateway" target="1.5" />
-      <module name="coach" target="1.5" />
-      <module name="discovery-service" target="1.5" />
-      <module name="Exercice" target="1.5" />
       <module name="gateway-service" target="17" />
-      <module name="MicroServicePlantExercice" target="1.5" />
       <module name="produit" target="17" />
-      <module name="ProduitService" target="1.5" />
-      <module name="SalleService" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Exercice" options="" />
-      <module name="MicroServicePlantExercice" options="" />
-      <module name="ProduitService" options="" />
-      <module name="SalleService" options="" />
-      <module name="api-gateway" options="" />
-      <module name="coach" options="" />
-      <module name="discovery-service" options="" />
+      <module name="Exercice" options="-parameters" />
+      <module name="MicroServicePlantExercice" options="-parameters" />
+      <module name="ProduitService" options="-parameters" />
+      <module name="SalleService" options="-parameters" />
+      <module name="api-gateway" options="-parameters" />
+      <module name="coach" options="-parameters" />
+      <module name="discovery-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="produit" options="-parameters" />
     </option>

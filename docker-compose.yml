@@ -1,29 +1,28 @@
 services:
-  mysqldbplant:
-    container_name: plant-mysql-container
-    ports:
-      - "3306:3306"
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: 'PlantExercice'
-    volumes:
-      - /tmp
 
-  esprit-plant-service:
-    build: ./MicroServicePlantExercice
-    container_name: plant-service
+  mongo:
+    image: mongo:latest
     ports:
-      - '8083:8083'
-    expose:
-      - '8083'
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldbplant:3306/PlantExercice?createDatabaseIfNotExist=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+      MONGO_INITDB_ROOT_USERNAME:
+      MONGO_INITDB_ROOT_PASSWORD:
+
+  commande-service:
+    container_name: commande-service
+    build: ./commande-service
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=mongodb://mongo:27017/commande
       - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    image: "commande-service-docker"
     depends_on:
-      - mysqldbplant
+      - mongo
+    volumes:
+      - mongodb_data:/data/db
 
   discoveryservice:
     build: ./discovery-service
@@ -35,80 +34,6 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://discovery-service:8761/actuator/health"]
       interval: 10s
-
-  esprit-salle-service:
-    build: ./SalleService
-    container_name: salle-service
-    ports:
-      - '8084:8084'
-    expose:
-      - '8084'
-    environment:
-      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://salle-service:8084/actuator/health"]
-      interval: 10s
-    depends_on:
-      discoveryservice:
-        condition: service_healthy
-
-  coach-service:
-    build: ./coach
-    container_name: coach-service
-    ports:
-      - '8082:8082'
-    expose:
-      - '8082'
-    environment:
-      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://coach-service:8082/actuator/health"]
-      interval: 10s
-    depends_on:
-      discoveryservice:
-        condition: service_healthy
-
-  gateway-service:
-    build: ./api-gateway
-    container_name: gateway-service
-    ports:
-      - '9191:9191'
-    expose:
-      - '9191'
-    environment:
-      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://api-gateway:9191/actuator/health"]
-      interval: 10s
-    depends_on:
-      discoveryservice:
-        condition: service_healthy
-
-  mysqldb:
-    container_name: exercice-mysql-container
-    ports:
-      - "3306:3306"
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: 'exercice'
-    volumes:
-      - /tmp
-
-  esprit-exercice-service:
-    build: ./Exercice
-    container_name: exercice-service
-    ports:
-      - '8085:8085'
-    expose:
-      - '8085'
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/exercice?createDatabaseIfNotExist=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
-    depends_on:
-      - mysqldb
 
   mysqlprod:
     container_name: mysql-container
@@ -123,20 +48,23 @@ services:
 
   backend_spring:
     build:
-      context: ./
+      context: ./ProduitService
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlprod:3306/productdb
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlprod:3306/productdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+
     ports:
-      - "8081:8081"
+      - "8091:8091"
     depends_on:
       - mysqlprod
     volumes:
-      - /tmp
+      - ./backend_spring_data:/app/data
 
 volumes:
   db:
   backend_spring_data:
+  mongodb_data:
+
