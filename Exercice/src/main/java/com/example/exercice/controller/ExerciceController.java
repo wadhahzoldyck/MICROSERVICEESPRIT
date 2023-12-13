@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8085")
+@CrossOrigin(origins = "*")
 @RequestMapping("/Exercice")
 public class ExerciceController {
     @Autowired
